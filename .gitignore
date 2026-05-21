@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Node
+node_modules/
+infra/dashboard/dist/
+
+# Outputs (track directory, ignore contents)
+outputs/*
+!outputs/.gitkeep
+
+# Env files
+.env
+.env.local
+
+# OS
+.DS_Store
