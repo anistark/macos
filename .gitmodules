@@ -1,0 +1,6 @@
+[submodule "macosworld-aws"]
+	path = macosworld-aws
+	url = https://github.com/showlab/macosworld
+[submodule "macosworld-vmware"]
+	path = macosworld-vmware
+	url = https://github.com/yangpei-comp/macosworld_vmware
