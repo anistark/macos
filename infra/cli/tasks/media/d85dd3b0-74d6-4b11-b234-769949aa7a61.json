@@ -1,0 +1,10 @@
+{
+  "id": "d85dd3b0-74d6-4b11-b234-769949aa7a61",
+  "snapshot": {"en": "snapshot_used_en"},
+  "force_snapshot_recovery": true,
+  "task": {"en": "Set up TWO Hot Corners in System Settings → Desktop & Dock → Hot Corners… (the button is near the bottom of the pane): (a) the bottom-right corner should `Start Screen Saver`; (b) the top-right corner should `Lock Screen`. Click Done to save."},
+  "pre_command": "defaults write com.apple.dock wvous-br-corner -int 1 2>/dev/null; defaults write com.apple.dock wvous-tr-corner -int 1 2>/dev/null; killall cfprefsd 2>/dev/null; killall Dock 2>/dev/null; sleep 2",
+  "before_action_delay_seconds": 10,
+  "before_grading_delay_seconds": 30,
+  "grading_command": [["killall cfprefsd 2>/dev/null; sleep 2; BR=$(defaults read com.apple.dock wvous-br-corner 2>/dev/null); TR=$(defaults read com.apple.dock wvous-tr-corner 2>/dev/null); [ \"$BR\" = \"5\" ] && [ \"$TR\" = \"13\" ] && echo True || echo False", 100]]
+}

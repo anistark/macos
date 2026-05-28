@@ -1,0 +1,10 @@
+{
+  "id": "46deeb3d-fd07-4908-a3cc-111bcc222746",
+  "snapshot": {"en": "snapshot_used_en"},
+  "force_snapshot_recovery": true,
+  "task": {"en": "Create a new note in Notes titled exactly `Device Inventory`. The body must contain exactly these FIVE lines, in this order, with the placeholders replaced by the current values from System Settings → General → About (and the Storage and Hardware sub-pages):\n```\nmacOS Version: <X.Y.Z>\nMemory: <NN GB>\nChip: <chip name>\nSerial Number: <serial>\nStorage Available: <NN GB>\n```\nFor Storage Available, use the value shown in System Settings → General → Storage (e.g. `123 GB`). For Serial Number, click `More Info…` on the About page (or check `System Information` from the Apple menu)."},
+  "pre_command": "osascript -e 'tell application \"Notes\" to delete every note' -e 'tell application \"Notes\" to delete every note in folder \"Recently Deleted\"' -e 'tell application \"Notes\" to quit' 2>/dev/null; sleep 1",
+  "before_action_delay_seconds": 10,
+  "before_grading_delay_seconds": 30,
+  "grading_command": [["M=$(sw_vers -productVersion); R=$(( $(sysctl -n hw.memsize) / 1073741824 )); C=$(sysctl -n machdep.cpu.brand_string); SN=$(system_profiler SPHardwareDataType 2>/dev/null | awk -F': ' '/Serial Number/{print $2; exit}'); BODY=$(osascript -e 'tell application \"Notes\" to get body of every note' 2>/dev/null); echo \"$BODY\" | grep -q \"macOS Version: $M\" && echo \"$BODY\" | grep -q \"Memory: ${R} GB\" && echo \"$BODY\" | grep -qF \"Chip: $C\" && echo \"$BODY\" | grep -qF \"Serial Number: $SN\" && echo \"$BODY\" | grep -qE 'Storage Available: [0-9]+ GB' && echo True || echo False", 100]]
+}

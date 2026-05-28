@@ -12,16 +12,27 @@ npm run dev
 
 Serves on `http://localhost:5173`.
 
+## Routes
+
+- `/` — list of runs found under `outputs/runs/`.
+- `/r/:runId` — list of tasks in that run (parsed from `summary.json`).
+- `/r/:runId/t/:taskId` — trajectory player: scrub through screenshots, see action + model thinking per frame.
+
 ## Data source
 
-The dashboard reads from `<repo-root>/outputs/runs/*/summary.json` — the same directory that the CLI in `infra/cli/` writes to. The relationship is local-only: both pieces share the filesystem.
+The dashboard reads run data from `<repo-root>/outputs/runs/` — the same directory the CLI in `infra/cli/` writes to. Override with the `MACOSWORLD_OUTPUTS_DIR` env var (same convention as the CLI).
 
-A symlink at `public/outputs` is used to make those JSON files reachable via the dev server. Recreate it with:
+Two ways the data reaches the browser:
 
-```bash
-ln -s ../../../outputs public/outputs
-```
+- **Listing** — a small dev-only Vite plugin (`vite-plugins/runs-api.ts`) exposes:
+  - `GET /api/runs` → array of `{ run_id, n_tasks, mtime, has_summary }`
+  - `GET /api/runs/:runId` → contents of `summary.json` (array of `TaskResult`)
+- **Static files** — `trajectory.jsonl`, `result.json`, and `context/step_NNN.png` are served via the `public/outputs → ../../../outputs` symlink. Recreate the symlink with:
+
+  ```bash
+  ln -s ../../../outputs public/outputs
+  ```
 
 ## Stack
 
-Standard Vite React-TS template — see `vite.config.ts`, `tsconfig*.json`, `eslint.config.js`. Real UI (run list, drill-down, charts) is a follow-up.
+Vite + React 19 + TypeScript + React Router 7. No CSS framework — plain CSS variables in `src/index.css`.

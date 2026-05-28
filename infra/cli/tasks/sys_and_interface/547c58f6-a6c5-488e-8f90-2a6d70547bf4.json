@@ -1,0 +1,10 @@
+{
+  "id": "547c58f6-a6c5-488e-8f90-2a6d70547bf4",
+  "snapshot": {"en": "snapshot_used_en"},
+  "force_snapshot_recovery": true,
+  "task": {"en": "In System Settings → Desktop & Dock (also called Dock & Menu Bar), apply ALL THREE of the following changes: (a) turn ON `Automatically hide and show the Dock`; (b) set `Position on screen` to `Left`; (c) drag the `Size` slider all the way to the left (smallest)."},
+  "pre_command": "defaults write com.apple.dock autohide -bool false; defaults write com.apple.dock orientation -string bottom; defaults write com.apple.dock tilesize -int 48; killall Dock 2>/dev/null; sleep 2",
+  "before_action_delay_seconds": 10,
+  "before_grading_delay_seconds": 30,
+  "grading_command": [["killall cfprefsd 2>/dev/null; sleep 2; A=$(defaults read com.apple.dock autohide 2>/dev/null); O=$(defaults read com.apple.dock orientation 2>/dev/null); T=$(defaults read com.apple.dock tilesize 2>/dev/null); [ \"$A\" = \"1\" ] && [ \"$O\" = \"left\" ] && awk -v t=\"$T\" 'BEGIN{exit !(t+0<=20)}' && echo True || echo False", 100]]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "2ecdad87-e343-4edc-9c08-024dcc6b1ac6",
+  "snapshot": {"en": "snapshot_used_en"},
+  "force_snapshot_recovery": true,
+  "task": {"en": "In Reminders, create a single reminder in the default list (the first list shown in the sidebar) with: title `Submit Q3 expense report` (exactly), due date `June 15, 2026` at `9:00 AM`. Do not add any other reminders."},
+  "pre_command": "osascript -e 'tell application \"Reminders\" to delete every reminder' 2>/dev/null; osascript -e 'tell application \"Reminders\" to quit' 2>/dev/null; sleep 1",
+  "before_action_delay_seconds": 10,
+  "before_grading_delay_seconds": 30,
+  "grading_command": [["D=$(osascript -e 'tell application \"Reminders\" to get due date of (first reminder whose name is \"Submit Q3 expense report\")' 2>/dev/null); echo \"$D\" | grep -q \"June 15, 2026\" && echo \"$D\" | grep -q \"9:00:00 AM\" && echo True || echo False", 100]]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "f7cef314-fa6e-4ca3-981a-321eb39ab6b1",
+  "snapshot": {"en": "snapshot_used_en"},
+  "force_snapshot_recovery": true,
+  "task": {"en": "Using TextEdit, create a new document. If it opens in Rich Text mode, switch it to plain text first (Format menu → Make Plain Text, or ⇧⌘T). Type exactly the three lines below (no extra lines, no trailing blank line beyond a single newline at the end):\n```\none\ntwo\nthree\n```\nSave the file to `~/Desktop/notes.txt` (use ⌘S, name it `notes.txt`, choose the Desktop, and make sure the format is Plain Text)."},
+  "pre_command": "rm -f /Users/ec2-user/Desktop/notes.txt; osascript -e 'tell application \"TextEdit\" to quit' 2>/dev/null; sleep 1",
+  "before_action_delay_seconds": 10,
+  "before_grading_delay_seconds": 30,
+  "grading_command": [["printf 'one\\ntwo\\nthree\\n' > /tmp/_expected_notes.txt && [ -f /Users/ec2-user/Desktop/notes.txt ] && cmp -s /tmp/_expected_notes.txt /Users/ec2-user/Desktop/notes.txt && echo True || echo False", 100]]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "bbfb450e-376a-4892-9769-31d76606c5c2",
+  "snapshot": {"en": "snapshot_used_en"},
+  "force_snapshot_recovery": true,
+  "task": {"en": "Two-step task: (1) In Calendar, create a new event titled exactly `Standup` on 2026-06-01 from 10:00 AM to 10:30 AM in any calendar. (2) Then switch to Mail and create a new draft message (do NOT send) with the subject `Standup`. Close the draft so it is saved to Drafts."},
+  "pre_command": "osascript -e 'tell application \"Calendar\" to quit' 2>/dev/null; osascript -e 'tell application \"Mail\" to quit' 2>/dev/null; sleep 1",
+  "before_action_delay_seconds": 10,
+  "before_grading_delay_seconds": 30,
+  "grading_command": [["CAL=$(osascript -e 'tell application \"Calendar\" to get start date of (first event whose summary is \"Standup\")' 2>/dev/null); MAIL=$(osascript -e 'tell application \"Mail\" to get subject of every message of (first mailbox whose name contains \"Draft\")' 2>/dev/null); echo \"$CAL\" | grep -q \"June 1, 2026\" && echo \"$CAL\" | grep -q \"10:00:00 AM\" && echo \"$MAIL\" | grep -q \"Standup\" && echo True || echo False", 100]]
+}

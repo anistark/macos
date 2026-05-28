@@ -1,0 +1,10 @@
+{
+  "id": "746f816a-b249-4040-a48f-9db983ea683e",
+  "snapshot": {"en": "snapshot_used_en"},
+  "force_snapshot_recovery": true,
+  "task": {"en": "Create a shell script at `~/Documents/today.sh` that prints today's date in `YYYY-MM-DD` format and nothing else. Running `bash ~/Documents/today.sh` should output exactly one line matching `YYYY-MM-DD` (e.g. `2026-05-27`). You can use TextEdit (Plain Text mode) or any editor to create the file."},
+  "pre_command": "rm -f /Users/ec2-user/Documents/today.sh",
+  "before_action_delay_seconds": 10,
+  "before_grading_delay_seconds": 30,
+  "grading_command": [["[ -f /Users/ec2-user/Documents/today.sh ] && OUT=$(bash /Users/ec2-user/Documents/today.sh 2>/dev/null) && echo \"$OUT\" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' && [ \"$OUT\" = \"$(date +%Y-%m-%d)\" ] && echo True || echo False", 100]]
+}
