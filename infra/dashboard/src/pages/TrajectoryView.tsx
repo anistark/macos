@@ -21,6 +21,9 @@ import {
 
 const PRELOAD_AHEAD = 5
 
+const fmtDur = (s: number) =>
+  s < 60 ? `${Math.round(s)}s` : `${Math.floor(s / 60)}m ${Math.round(s % 60)}s`
+
 export default function TrajectoryView() {
   const { runId = '', taskId = '' } = useParams()
   const [steps, setSteps] = useState<StepRecord[] | null>(null)
@@ -202,6 +205,35 @@ export default function TrajectoryView() {
           </nav>
         </aside>
         <div className="rollout-main">
+
+      {result?.model && (
+        <div className="rollout-header">
+          <div className="model-name">{result.model}</div>
+          <div className="rollout-meta">
+            {result.category && <span className="meta-item">{result.category}</span>}
+            {typeof result.passed === 'boolean' && (
+              <span className={`pill ${result.passed ? 'green' : 'red'}`}>
+                {result.passed ? 'passed' : 'failed'}
+              </span>
+            )}
+            {result.n_steps !== undefined && (
+              <span className="meta-item">{result.n_steps} steps</span>
+            )}
+            {result.duration_s != null && result.duration_s > 0 && (
+              <span className="meta-item">{fmtDur(result.duration_s)}</span>
+            )}
+            {(result.input_tokens ?? 0) + (result.output_tokens ?? 0) > 0 && (
+              <span className="meta-item">
+                {(result.input_tokens ?? 0).toLocaleString()} in /{' '}
+                {(result.output_tokens ?? 0).toLocaleString()} out tok
+              </span>
+            )}
+            {result.cost_usd != null && result.cost_usd > 0 && (
+              <span className="meta-item">${result.cost_usd.toFixed(3)}</span>
+            )}
+          </div>
+        </div>
+      )}
 
       {taskDef?.instruction && (
         <div className="card task-card">
